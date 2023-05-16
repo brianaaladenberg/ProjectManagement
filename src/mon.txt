@@ -1,0 +1,48 @@
+const project = new Schema({
+	_id: Number,
+	projectInfo: {
+		projectNumber: String,
+		phaseCode: String,
+		priority: Number,
+		projectName: String,
+		projectArea: String,
+		department: String
+	},
+	designInfo: {
+		designer: String,
+		hoursRemaining: Number,
+		survey: Boolean,
+		cadBackgrounds: Boolean,
+		pumpInfo: Boolean,
+		gcSubmittal: Date,
+		permitSubmital: Date,
+		insuranceSubmittal: Date,
+		stateSubmittal: Date,
+		listDate: Date
+	},
+	fabInfo: {
+		shipDate: Date,
+		listNumber: Number,
+		welds: Number,
+		mains: Number,
+		lines: Number,
+		hangers: Number,
+		sprinklers: Number,
+		purchaseOrder: Boolean,
+		fieldPrints: String
+	},
+	managementInfo: {
+		pmNotes: String,
+		projectManager: String,
+		gcOwner: String,
+		awardDate: Date
+	},
+	address: {
+		street: String,
+		city: String,
+		state: String,
+		site: String,
+		building: String,
+		floor: string
+	}
+});

@@ -1,0 +1,15 @@
+.inputCard {
+    width: 460px;
+    padding: 10px 0px;
+    text-align: center;
+}
+.inputAddressCard {
+    width: 250px;
+    padding: 10px 0px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+}
+h1 {
+    margin: 3px;
+}
