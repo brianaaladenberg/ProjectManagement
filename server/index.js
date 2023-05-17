@@ -41,30 +41,69 @@ app.use("/getProjectData", async(req, res) => {
 app.use("/edit", async(req, res) => {
   // prints the recieved data to the console
   if (req.body._id !== undefined) {
-    //console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
-    //if edited content is in the projectInfo update here
-    if(req.body.columnEdited==='projectName' || req.body.columnEdited==='projectNumber' || req.body.columnEdited==='department' || req.body.columnEdited==='projectManager' || req.body.columnEdited==='projectArea') {
-      console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
-      const info = {};
-      info['projectInfo.'+req.body.columnEdited] = req.body.value;
-      //console.log(info);
-      await projectDBmodel.findByIdAndUpdate(req.body._id, info);
-      
-      console.log('pushing data');
-      const allItems = await projectDBmodel.find().exec();
-      io.emit('pushData',allItems);
-      res.json({ message: "edit successful!" });
 
+    //see which subset the data is in
+    let subData = '';
+    if(req.body.columnEdited==='projectName' || req.body.columnEdited==='projectNumber' || req.body.columnEdited==='department' || req.body.columnEdited==='projectManager' || req.body.columnEdited==='projectArea') {
+      subData = 'projectInfo.';
     } else if (req.body.columnEdited==='designer' ||req.body.columnEdited==='hoursRemaining' ||req.body.columnEdited==='priority' || req.body.columnEdited==='permitSubmittal' || req.body.columnEdited==='listDate') {
-      console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
-      const info = {};
-      info['designInfo.'+req.body.columnEdited] = req.body.value;
-      //console.log(info);
-      await projectDBmodel.findByIdAndUpdate(req.body._id, info);
-      //console.log('pushing data');
-      //io.emit('pushData');
-      res.json({ message: "edit successful!" });
-    };
+      subData = 'designInfo.';
+    } else if (req.body.columnEdited==='area' ||req.body.columnEdited==='building' ||req.body.columnEdited==='city' || req.body.columnEdited==='state' || req.body.columnEdited==='street') {
+      subData = 'address.';
+    }
+
+    console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
+
+    //update the database with the submitted data
+    const info = {};
+    info[subData+req.body.columnEdited] = req.body.value;
+    await projectDBmodel.findByIdAndUpdate(req.body._id, info);
+
+    //get updated data from mongoDB and push it to the clients
+    const allItems = await projectDBmodel.find().exec();
+    io.emit('pushData',allItems);
+    res.json({ message: "edit successful!" });
+
+
+    // //if edited content is in the projectInfo update here
+    // if(req.body.columnEdited==='projectName' || req.body.columnEdited==='projectNumber' || req.body.columnEdited==='department' || req.body.columnEdited==='projectManager' || req.body.columnEdited==='projectArea') {
+    //   console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
+    //   const info = {};
+    //   info['projectInfo.'+req.body.columnEdited] = req.body.value;
+    //   //console.log(info);
+    //   await projectDBmodel.findByIdAndUpdate(req.body._id, info);
+      
+    //   console.log('pushing data');
+    //   const allItems = await projectDBmodel.find().exec();
+    //   io.emit('pushData',allItems);
+    //   res.json({ message: "edit successful!" });
+
+    // //if edited content is in the designInfo update here
+    // } else if (req.body.columnEdited==='designer' ||req.body.columnEdited==='hoursRemaining' ||req.body.columnEdited==='priority' || req.body.columnEdited==='permitSubmittal' || req.body.columnEdited==='listDate') {
+    //   console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
+    //   //update the database with the submitted data
+    //   const info = {};
+    //   info['designInfo.'+req.body.columnEdited] = req.body.value;
+    //   await projectDBmodel.findByIdAndUpdate(req.body._id, info);
+
+    //   //get updated data from mongoDB and push it to the clients
+    //   const allItems = await projectDBmodel.find().exec();
+    //   io.emit('pushData',allItems);
+    //   res.json({ message: "edit successful!" });
+
+    // //if edited content is in the address update here
+    // }else if (req.body.columnEdited==='area' ||req.body.columnEdited==='building' ||req.body.columnEdited==='city' || req.body.columnEdited==='state' || req.body.columnEdited==='street') {
+    //   console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
+    //   //update the database with the submitted data
+    //   const info = {};
+    //   info['designInfo.'+req.body.columnEdited] = req.body.value;
+    //   await projectDBmodel.findByIdAndUpdate(req.body._id, info);
+
+    //   //get updated data from mongoDB and push it to the clients
+    //   const allItems = await projectDBmodel.find().exec();
+    //   io.emit('pushData',allItems);
+    //   res.json({ message: "edit successful!" });
+    // };
   } else {
     res.json({ message: "edit unsuccessful" });
   }
