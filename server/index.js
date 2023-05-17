@@ -3,6 +3,9 @@ dotenv.config({path:'.env'});
 import express from "express";
 const app = express();
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import projectDBmodel from "./data/projectDBmodel.js";
@@ -11,7 +14,6 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
-
 
 //checks if the socket io connected
 io.on("connection", (socket) => {
@@ -114,6 +116,19 @@ app.use("/form", async(req, res) => {
     res.json({ message: "Submission unsuccessful" });
   }
 })
+
+//deployment
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+if(process.env.NODE_ENV==='production') {
+  app.use(express.static(path.join(__dirname,'../client/dist')))
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname,'client','dist','index.html'))
+  })
+} else {
+
+}
 
 //connect to mongodb
 const PORT = process.env.PORT || 3000;
