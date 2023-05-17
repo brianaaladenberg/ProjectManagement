@@ -13,7 +13,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { Link } from "react-router-dom";
 
 import { io } from "socket.io-client";
-const socket = io('http://localhost:3000',{ transports : ['websocket'] });
+const socket = io('https://project-management-brian.herokuapp.com',{ transports : ['websocket'] });
 
 import NewProject from './Tables/NewProject'
 import DesignTable from './Tables/DesignTable'
@@ -52,7 +52,7 @@ export default function Header() {
 
   //gets the list of items from the backend
   const UpdateItems = async () => {
-    const response = await fetch("http://localhost:3000/getProjectData");
+    const response = await fetch("https://project-management-brian.herokuapp.com/getProjectData");
     //console.log(response);
     const data = await response.json();
     //updates the list of items thats displayed

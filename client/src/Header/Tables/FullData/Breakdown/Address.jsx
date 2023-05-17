@@ -11,7 +11,7 @@ export default function Address(props) {
         console.log(event);
         console.log(props.id);
 
-        fetch("http://localhost:8000/edit", {
+        fetch("https://project-management-brian.herokuapp.com/edit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -33,7 +33,7 @@ export default function FormPropsTextFields() {
 
     console.log(formJson);
 
-    fetch('http://localhost:8000/form', {
+    fetch('https://project-management-brian.herokuapp.com/form', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -11,7 +11,7 @@ export default function GeneralProjectInfo(props) {
         console.log(event);
         console.log(props.id);
 
-        fetch("http://localhost:3000/edit", {
+        fetch("https://project-management-brian.herokuapp.com/edit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

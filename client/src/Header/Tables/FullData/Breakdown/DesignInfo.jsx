@@ -18,7 +18,7 @@ export default function DesignInfo(props) {
         // console.log(event);
         // console.log(props.id);
 
-        fetch("http://localhost:8000/edit", {
+        fetch("https://project-management-brian.herokuapp.com/edit", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -99,12 +99,3 @@ export default function DesignInfo(props) {
         </Card>
     );
 };
-
-{/* <TextField
-    variant="standard"
-    name="listDate"
-    key={props.designInfo.listDate}
-    defaultValue={props.designInfo.listDate}
-    onBlur={(e) => handleEdit(e.target.value, e.target.name)}
-    InputProps={{disableUnderline: true , style: {fontSize: 15, height:20}}}
-/> */}
