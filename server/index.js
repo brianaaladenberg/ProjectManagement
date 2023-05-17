@@ -1,5 +1,5 @@
-// import dotenv from 'dotenv';
-// dotenv.config();
+import * as dotenv from 'dotenv';
+dotenv.config({path:'.env'});
 import express from "express";
 const app = express();
 
@@ -127,7 +127,7 @@ if(process.env.NODE_ENV==='production') {
     res.sendFile(path.resolve(__dirname,'client','dist','index.html'))
   })
 } else {
-  res.send('failed to find path');
+  
 }
 
 //connect to mongodb
