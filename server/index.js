@@ -12,6 +12,7 @@ import { Server } from "socket.io";
 const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
 
+
 //checks if the socket io connected
 io.on("connection", (socket) => {
   console.log('connected');
