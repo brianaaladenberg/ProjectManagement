@@ -1,16 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-
-import { Link } from "react-router-dom";
 
 import { io } from "socket.io-client";
 const socket = io('https://project-management-brian.herokuapp.com',{ transports : ['websocket'] });
@@ -19,14 +13,8 @@ import NewProject from './Tables/NewProject'
 import DesignTable from './Tables/DesignTable'
 
 export default function Header() {
-  const [name, setName] = useState('');
   const [projectData, setProjectData] = useState({});
-  const [designTab, setDesignTab] = useState(false);
-  const [newTab, setNewTab] = useState(false);
   const [tabValue, setTabValue] = React.useState('1');
-
-  
-  const pages = ['MANAGEMENT', 'DESIGN', 'FABRICATION', 'NEW'];
   
   // checks if the socket io connected to the server
   socket.on("connect", () => {
@@ -45,10 +33,6 @@ export default function Header() {
         setProjectData(pushedData);
       }
   });
-
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
 
   //gets the list of items from the backend
   const UpdateItems = async () => {
@@ -71,6 +55,10 @@ export default function Header() {
     },30000)
     return () => clearInterval(intervalId);
   }, []);
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
 
   return (
     <Container sx={{maxWidth: 'lg'}}>
