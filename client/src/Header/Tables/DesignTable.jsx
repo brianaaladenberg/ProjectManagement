@@ -17,7 +17,6 @@ const columns = [
 //get all of the data from mongodb here and send to the specific tab
 export default function DesignTable({projectData}) {
   const [rowSelected, setRowSelected] = useState([1]);
-  const [rowSelectedData, setRowSelectedData] = useState({});
   const [rowSelectedId, setRowSelectedId] = useState(0);
 
   //sets up the data displayed in each row - 
@@ -81,12 +80,10 @@ export default function DesignTable({projectData}) {
                   if (obj._id === newRowSelectionModel[0]) {
                     console.log(obj._id);
                     setRowSelectedId(obj._id);
-                    //console.log(projectData.find(x => x._id === obj._id));
-                    //setRowSelectedData(projectData.find(x => x._id === obj._id));
                   }
                 });
               }}
-              rowSelectionModel={rowSelected}
+              // rowSelectionModel={rowSelected}
               processRowUpdate={handleEdit}
               hideFooterSelectedRowCount
             />

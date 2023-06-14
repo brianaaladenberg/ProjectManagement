@@ -60,8 +60,8 @@ export default function FormPropsTextFields() {
       noValidate
       autoComplete="off"
     >
-      <div class='inputAddressCard'>
-        <Card variant="outlined">
+      <div class='inputAddressCard' style={{padding:0}}>
+        <Card variant="outlined" style={{margin:4}}>
           <h1>Project Information</h1>
           <TextField
             required
@@ -112,8 +112,8 @@ export default function FormPropsTextFields() {
         </Card>
       </div>
 
-      <div class='inputAddressCard'>
-        <Card variant="outlined">
+      <div class='inputAddressCard'  style={{padding:0}}>
+        <Card variant="outlined" style={{margin:4}}>
           <h1>Design Information</h1>
           <TextField
             required
@@ -145,8 +145,8 @@ export default function FormPropsTextFields() {
         </Card>
       </div>
 
-      <div class='inputAddressCard'>
-        <Card variant="outlined">
+      <div class='inputAddressCard' style={{padding:0}}>
+        <Card variant="outlined" style={{margin:4}}>
           <h1>Address</h1>
           <TextField
             required

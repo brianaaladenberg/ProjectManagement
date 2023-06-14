@@ -8,6 +8,7 @@ import TabPanel from '@mui/lab/TabPanel';
 
 import { io } from "socket.io-client";
 const socket = io('https://project-management-brian.herokuapp.com',{ transports : ['websocket'] });
+// const socket = io('http://localhost:3000',{ transports : ['websocket'] });
 
 import NewProject from './Tables/NewProject'
 import DesignTable from './Tables/DesignTable'

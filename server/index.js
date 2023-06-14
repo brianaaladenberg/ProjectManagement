@@ -17,7 +17,7 @@ const io = new Server(httpServer, { /* options */ });
 
 //checks if the socket io connected
 io.on("connection", (socket) => {
-  console.log('connected');
+  console.log('connected to socket: '+socket);
 });
 
 app.use(bodyParser.json({limit:"30mb", extended: true }));
@@ -69,6 +69,83 @@ app.use("/edit", async(req, res) => {
   }
 });
 
+app.use("/delete", async(req, res) => {
+  // prints the recieved data to the console
+  if (req.body._id !== undefined) {
+    console.log("deleting item with id: "+req.body._id);
+
+    //delete the item from the database
+    await projectDBmodel.findByIdAndDelete(req.body._id);
+
+    //get updated data from mongoDB and push it to the clients
+    const allItems = await projectDBmodel.find().exec();
+    io.emit('pushData',allItems);
+    res.json({ message: "delete successful!" });
+  } else {
+    res.json({ message: "delete unsuccessful" });
+  }
+});
+
+app.use("/copy", async(req, res) => {
+  // prints the recieved data to the console
+  if (req.body._id !== undefined) {
+    console.log("copying item with id: "+req.body._id);
+
+    //delete the item from the database
+    let itemToDuplicate = await projectDBmodel.findById(req.body._id);
+
+    //console.log(itemToDuplicate);
+
+    const newEntry = new projectDBmodel({
+      projectInfo: {
+        projectNumber: itemToDuplicate.projectInfo.projectNumber,
+        projectName: itemToDuplicate.projectInfo.projectName,
+        department: itemToDuplicate.projectInfo.department,
+        projectManager: itemToDuplicate.projectInfo.projectManager,
+        projectArea: itemToDuplicate.projectInfo.projectArea
+      },
+      designInfo: {
+        designer: itemToDuplicate.designInfo.designer,
+        hoursRemaining: itemToDuplicate.designInfo.hoursRemaining,
+        priority: itemToDuplicate.designInfo.priority,
+        permitSubmital: itemToDuplicate.designInfo.permitSubmital,
+        listDate: itemToDuplicate.designInfo.listDate
+      },
+      fabInfo: {
+        shipDate: itemToDuplicate.fabInfo.shipDate,
+        listNumber: itemToDuplicate.fabInfo.listNumber,
+        welds: itemToDuplicate.fabInfo.welds,
+        mains: itemToDuplicate.fabInfo.mains,
+        lines: itemToDuplicate.fabInfo.lines,
+        hangers: itemToDuplicate.fabInfo.hangers,
+        sprinklers: itemToDuplicate.fabInfo.sprinklers,
+        purchaseOrder: itemToDuplicate.fabInfo.purchaseOrder,
+        fieldPrints: itemToDuplicate.fabInfo.fieldPrints
+    },
+      address: {
+        street: itemToDuplicate.address.street,
+        city: itemToDuplicate.address.city,
+        state: itemToDuplicate.address.state,
+        building: itemToDuplicate.address.building,
+        area: itemToDuplicate.address.area
+      }
+    });
+
+    // console.log('newEntry');
+    // console.log(newEntry);
+    await projectDBmodel.collection.insertOne(newEntry);
+
+    //get updated data from mongoDB and push it to the clients
+    const allItems = await projectDBmodel.find().exec();
+    
+    io.emit('pushData',allItems);
+    console.log('hi');
+    res.json({ message: "copy successful!" });
+  } else {
+    res.json({ message: "copy unsuccessful" });
+  }
+});
+
 app.use("/form", async(req, res) => {
   // prints the recieved data to the console
   if (typeof req.body.formJson !== 'undefined') {
@@ -108,6 +185,7 @@ app.use("/form", async(req, res) => {
         area: req.body.formJson.Area
       }
     });
+    
     console.log(newEntry);
     projectDBmodel.collection.insertOne(newEntry);
     res.json({ message: "Submission successful" });
