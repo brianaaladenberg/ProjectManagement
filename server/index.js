@@ -50,6 +50,8 @@ app.use("/edit", async(req, res) => {
       subData = 'designInfo.';
     } else if (req.body.columnEdited==='area' ||req.body.columnEdited==='building' ||req.body.columnEdited==='city' || req.body.columnEdited==='state' || req.body.columnEdited==='street') {
       subData = 'address.';
+    } else if (req.body.columnEdited==='fieldPrints' ||req.body.columnEdited==='hangers' ||req.body.columnEdited==='lines' || req.body.columnEdited==='listNumber' || req.body.columnEdited==='mains' || req.body.columnEdited==='purchaseOrder' || req.body.columnEdited==='shipDate' || req.body.columnEdited==='sprinklers' || req.body.columnEdited==='welds') {
+      subData = 'fabInfo.';
     }
 
     console.log("editing: " + req.body.columnEdited + " to a value of "+req.body.value+" in the item id "+req.body._id);
@@ -57,6 +59,7 @@ app.use("/edit", async(req, res) => {
     //update the database with the submitted data
     const info = {};
     info[subData+req.body.columnEdited] = req.body.value;
+    console.log(info);
     await projectDBmodel.findByIdAndUpdate(req.body._id, info);
 
     //get updated data from mongoDB and push it to the clients

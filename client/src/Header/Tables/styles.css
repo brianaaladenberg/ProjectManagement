@@ -13,3 +13,6 @@
 h1 {
     margin: 3px;
 }
+.css-1usso8h-MuiDataGrid-root .MuiDataGrid-cell.MuiDataGrid-cell--editing {
+    box-shadow: 0px 0px 0px 0px !important;
+}

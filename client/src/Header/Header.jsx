@@ -12,6 +12,7 @@ const socket = io('https://project-management-brian.herokuapp.com',{ transports 
 
 import NewProject from './Tables/NewProject'
 import DesignTable from './Tables/DesignTable'
+import FabricationTable from './Tables/FabricationTable'
 
 export default function Header() {
   const [projectData, setProjectData] = useState({});
@@ -66,16 +67,14 @@ export default function Header() {
     <TabContext value={tabValue}>
         <Box sx={{backgroundColor:'lightblue' }}>
           <TabList onChange={handleTabChange}>
-            <Tab label="Management" value="1" />
-            <Tab label="Design" value="2" />
-            <Tab label="New" value="3" sx={{position: 'absolute',right: '0'}}/>
-            <Tab label="Fabrication" value="4" />
+            <Tab label="Design" value="1" />
+            <Tab label="New" value="2" sx={{position: 'absolute',right: '0'}}/>
+            <Tab label="Fabrication" value="3" />
           </TabList>
         </Box>
-        <TabPanel value="1" sx={{padding: 0, paddingTop:2}}>Management data display</TabPanel>
-        <TabPanel value="2" sx={{padding: 0, paddingTop:2}}><DesignTable projectData={projectData} /></TabPanel>
-        <TabPanel value="3" sx={{padding: 0, paddingTop:2}}><NewProject /></TabPanel>
-        <TabPanel value="4" sx={{padding: 0, paddingTop:2}}>Fabrication data display</TabPanel>
+        <TabPanel value="1" sx={{padding: 0, paddingTop:2}}><DesignTable projectData={projectData} /></TabPanel>
+        <TabPanel value="2" sx={{padding: 0, paddingTop:2}}><NewProject /></TabPanel>
+        <TabPanel value="3" sx={{padding: 0, paddingTop:2}}><FabricationTable projectData={projectData} /></TabPanel>
       </TabContext>
     </Container>
   );

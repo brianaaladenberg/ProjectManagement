@@ -10,9 +10,11 @@ const columns = [
   { field: 'projectNumber', headerName: '#', width: 76, editable: true},
   { field: 'projectName', headerName: 'Project Name', width: 200, editable: true},
   { field: 'projectArea', headerName: 'Project Area', width: 150, editable: true},
-  { field: 'designer', headerName: 'Designer', width: 100, editable: true},
-  { field: 'listDate', headerName: 'List Date', width: 110, editable: true},
-  { field: 'priority', headerName: 'Priority', width: 55, editable: true},
+  { field: 'shipDate', headerName: 'Ship Date', width: 100, editable: true},
+  { field: 'mains', headerName: 'Mains', width: 55, editable: true},
+  { field: 'lines', headerName: 'Lines', width: 55, editable: true},
+  { field: 'welds', headerName: 'Welds', width: 55, editable: true},
+  { field: 'sprinklers', headerName: 'Sprinklers', width: 80, editable: true},
 ];
 
 //get all of the data from mongodb here and send to the specific tab
@@ -30,9 +32,11 @@ export default function DesignTable({projectData}) {
       projectNumber: i.projectInfo.projectNumber, 
       projectName: i.projectInfo.projectName, 
       projectArea: i.projectInfo.projectArea, 
-      designer: i.designInfo.designer,
-      listDate: dayjs(i.designInfo.listDate).format('DD/MM/YYYY'),
-      priority: i.designInfo.priority
+      shipDate: dayjs(i.fabInfo.shipDate).format('DD/MM/YYYY'),
+      mains: i.fabInfo.mains,
+      lines: i.fabInfo.lines,
+      welds: i.fabInfo.welds,
+      sprinklers: i.fabInfo.sprinklers
     }));
   };
 
@@ -46,7 +50,7 @@ export default function DesignTable({projectData}) {
         columnEdited = key;
 
         //sends this info to backend - the column edited, the new value, and the id of the object edited
-        fetch("https://project-management-brian.herokuapp.com/edit", {
+        fetch("http://localhost:3000/edit", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
