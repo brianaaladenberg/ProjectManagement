@@ -70,7 +70,7 @@ export default function DesignInfo(props) {
                     <DemoContainer components={['DatePicker']}>
                         <DateField
                         variant="standard"
-                        name="listDate"
+                        name="submittalDate"
                         key={dayjs(props.designInfo.permitSubmital)}
                         defaultValue={dayjs(props.designInfo.permitSubmital)}
                         onBlur={(e) => handleEdit(e.target.value, e.target.name)}
@@ -90,7 +90,7 @@ export default function DesignInfo(props) {
                         key={dayjs(props.designInfo.listDate)}
                         defaultValue={dayjs(props.designInfo.listDate)}
                         onBlur={(e) => handleEdit(e.target.value, e.target.name)}
-                        InputProps={{disableUnderline: true , style: { overflow:'hidden', fontSize: 15, height:20, padding:0}}}
+                        InputProps={{disableUnderline: true , style: {color:'red', overflow:'hidden', fontSize: 15, height:20, padding:0}}}
                         />
                     </DemoContainer>
                 </LocalizationProvider>
