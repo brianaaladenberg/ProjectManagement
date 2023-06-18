@@ -50,7 +50,7 @@ export default function DesignTable({projectData}) {
         columnEdited = key;
 
         //sends this info to backend - the column edited, the new value, and the id of the object edited
-        fetch("http://localhost:3000/edit", {
+        fetch("https://project-management-brian.herokuapp.com/edit", {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
